@@ -23,34 +23,34 @@ const resolvers = {
 /**
  * Express and Apollo configuration
  */
-(async function () {
-    // Creating Apollo Server
-    const server = new ApolloServer({
-        typeDefs,
-        resolvers
-    });
 
-    // Initializing express 
-    const app = express();
+// Creating Apollo Server
+const server = new ApolloServer({
+    typeDefs,
+    resolvers
+});
 
-    // Various routes 
-    app.use(bodyParser.json());
-    app.use('/health', (req, res) => res.json({status: 'ok'}))
+// Initializing express 
+const app = express();
 
-    server.applyMiddleware({
-        app,
-        path: '/graphql'
-    });
+// Various routes 
+app.use(bodyParser.json());
+app.get('/health', (req, res) => res.json({status: 'ok'}))
 
-    // Starting the server
-    app.listen({ port: 4000 }, () => 
-        logger.info(`🚀 Server ready at http://localhost:4000`)
-    );
+server.applyMiddleware({
+    app,
+    path: '/graphql'
+});
 
-    app.use((req, res) => {
-        res.status(500);
-        res.send('Something went wrong, please check again.');
-    });
-    return server;
+// Starting the server
+app.listen({ port: 4000 }, () => 
+    logger.info(`🚀 Server ready at http://localhost:4000`)
+);
 
-}());
+app.use((req, res) => {
+    res.status(500);
+    res.send('Something went wrong, please check again.');
+});
+
+
+module.exports = app;
