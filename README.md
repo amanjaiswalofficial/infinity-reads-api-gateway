@@ -28,3 +28,11 @@ npm run dev
 ```
 Server ready at http://0.0.0.0:4000/
 ```
+
+## Testing
+ **We've used ```Jest``` and ```supertest``` for testing.**
+ 
+ * To run the tests:
+ ```
+ npm run test
+ ```  

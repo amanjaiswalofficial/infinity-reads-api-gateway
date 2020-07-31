@@ -3,12 +3,24 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const logger = require('./logger/index.js');
 
+// const BlogsAPI = require('./remoteDataSources/index.js');
+const BlogsData = require('./testData.js');
+
 // TODO: Remove typeDefs and resolvers from index.js
 
 // Construct a schema, using GraphQL schema language
 const typeDefs = gql`
   type Query {
-    hello: String
+    hello: String,
+    blogs: [Blogs]
+  }
+
+  type Blogs {
+    title: String,
+    content: String,
+    author: String,
+    image: String,
+    postedBy: String
   }
 `;
  
@@ -16,6 +28,12 @@ const typeDefs = gql`
 const resolvers = {
   Query: {
     hello: () => 'Hello world!',
+    blogs: (obj, args, { BlogsData }, info) => {
+      return BlogsData
+    },
+    // blogs: async (_source, _args, { dataSources }) => {
+    //   return dataSources.BlogsAPI.getAllBlogs();
+    // }
   },
 };
 
@@ -27,7 +45,16 @@ const resolvers = {
 // Creating Apollo Server
 const server = new ApolloServer({
     typeDefs,
-    resolvers
+    resolvers,
+    context: {
+      BlogsData
+    },
+    playground: true
+    // dataSources: () => {
+    //   return {
+    //     BlogsAPI: new BlogsAPI()
+    //   }
+    // }
 });
 
 // Initializing express 
