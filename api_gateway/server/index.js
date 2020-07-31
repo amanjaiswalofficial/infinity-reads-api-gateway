@@ -1,43 +1,14 @@
-const { ApolloServer, gql } = require('apollo-server-express');
+const { ApolloServer } = require('apollo-server-express');
 const express = require('express');
 const bodyParser = require('body-parser');
 const logger = require('./logger/index.js');
 
 // const BlogsAPI = require('./remoteDataSources/index.js');
-const BlogsData = require('./testData.js');
+const typeDefs = require('./Schemas/typeDefs.js');
+const resolvers = require('./Schemas/resolvers.js');
+const blogsData = require('./Schemas/testData.js');
 
-// TODO: Remove typeDefs and resolvers from index.js
-
-// Construct a schema, using GraphQL schema language
-const typeDefs = gql`
-  type Query {
-    hello: String,
-    blogs: [Blogs]
-  }
-
-  type Blogs {
-    title: String,
-    content: String,
-    author: String,
-    image: String,
-    postedBy: String
-  }
-`;
  
-// Provide resolver functions for your schema fields
-const resolvers = {
-  Query: {
-    hello: () => 'Hello world!',
-    blogs: (obj, args, { BlogsData }, info) => {
-      return BlogsData
-    },
-    // blogs: async (_source, _args, { dataSources }) => {
-    //   return dataSources.BlogsAPI.getAllBlogs();
-    // }
-  },
-};
-
-
 /**
  * Express and Apollo configuration
  */
@@ -47,7 +18,7 @@ const server = new ApolloServer({
     typeDefs,
     resolvers,
     context: {
-      BlogsData
+      blogsData
     },
     playground: true
     // dataSources: () => {

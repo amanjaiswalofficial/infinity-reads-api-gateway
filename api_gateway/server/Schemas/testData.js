@@ -23,4 +23,4 @@ const blogs = [
 ]
 
 
-module.exports = blogs
+module.exports = blogs;
