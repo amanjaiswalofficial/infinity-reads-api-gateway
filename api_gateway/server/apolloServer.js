@@ -2,8 +2,8 @@ const { ApolloServer } = require('apollo-server-express');
 
 
 const BlogsAPI = require('./remoteDataSources/index.js');
-const typeDefs = require('./Schemas/typeDefs.js');
-const resolvers = require('./Schemas/resolvers.js');
+const typeDefs = require('./schemas/typeDefs.js');
+const resolvers = require('./schemas/resolvers.js');
 
 
 // Creating Apollo Server
