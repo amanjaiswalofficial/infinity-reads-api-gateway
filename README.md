@@ -19,6 +19,11 @@ API Gateway for Infinity Reads. This service uses GraphQL and Apollo Server with
 npm install or npm i
 ```
 
+* Set the NODE_ENV
+```
+export NODE_ENV = 'development'
+```
+
 * Start development server
 ```
 npm run dev

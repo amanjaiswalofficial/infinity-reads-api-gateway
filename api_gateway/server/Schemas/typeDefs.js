@@ -9,11 +9,29 @@ const typeDefs = gql`
   }
 
   type Blogs {
-    title: String,
+    _id: ID,
+    comments: [Comments],
     content: String,
-    author: String,
-    image: String,
-    postedBy: String
+    created_at: String,
+    likes: [Likes],
+    tags: [Tags],
+    title: String,
+    user_id: String
+  }
+
+  type Comments {
+    id: ID,
+    comments: String
+  }
+
+  type Likes {
+    id: ID,
+    likes: String
+  }
+
+  type Tags {
+    id: ID,
+    tags: String
   }
 `;
 
