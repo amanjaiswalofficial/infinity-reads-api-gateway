@@ -6,7 +6,7 @@ const config = {
     },
     "services": {
         "blogs": {
-            "url": process.env.MICROSERVICE_BLOGS
+            "url": process.env.MICROSERVICE_BLOGS,
         }
     }
 }

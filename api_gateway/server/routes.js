@@ -20,10 +20,15 @@ server.applyMiddleware({
     path: '/graphql'
 });
 
-app.use((req, res, next) => {
+app.use((req, res) => {
   const error = new Error("Not Found");
   error.status = 404;
-  next(error);
+  res.status(error.status).send({
+    error: {
+      status: error.status,
+      message: error.message
+    },
+  });
 });
 
 // Error handler middleware

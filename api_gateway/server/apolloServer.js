@@ -16,9 +16,6 @@ const server = new ApolloServer({
         BlogsAPI: new BlogsAPI()
       }
     },
-    context: {
-      BlogsAPI
-    }
 });
 
 module.exports = server;
