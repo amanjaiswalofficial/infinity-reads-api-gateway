@@ -8,6 +8,9 @@ const config = {
         "blogs": {
             "url": process.env.MICROSERVICE_BLOGS
         }
-    }
+    },
+    "logger": {
+        "level": "debug"
+    },
 }
 module.exports = config;

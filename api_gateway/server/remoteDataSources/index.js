@@ -1,6 +1,6 @@
 const config = require('config');
 const { RESTDataSource } = require('apollo-datasource-rest');
-const logger = require('../logger/index.js');
+const logger = require('../logger/index.js')(module);
 
 
 class BlogsAPI extends RESTDataSource {
@@ -12,13 +12,9 @@ class BlogsAPI extends RESTDataSource {
 
     // This method throws an error if baseURL isn't correct
     didEncounterError(error) {
-        const error_details = error.extensions.response
+        const { response } = error.extensions
                 
-        logger.error(`error: {
-            url: ${error_details.url}
-            status: ${error_details.status}
-            statusText: ${error_details.statusText}
-        }`)
+        logger.error(`{'url': '${response.url}', 'status': '${response.status}', 'statusText': '${response.statusText}'}`)
 
         throw error;
     }

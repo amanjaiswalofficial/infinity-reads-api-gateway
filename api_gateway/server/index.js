@@ -1,5 +1,5 @@
 const config = require('config');
-const logger = require('./logger/index.js');
+const logger = require('./logger/index.js')(module);
 
 
 const { app } = require('./routes.js');
