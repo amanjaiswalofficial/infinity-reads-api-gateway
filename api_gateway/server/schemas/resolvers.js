@@ -3,8 +3,10 @@ const generateResponse = require('./generateResponse.js');
 // Provide resolver functions for your schema fields
 const resolvers = {
     Query: {
+      // Sample query resolver
       hello: () => 'Hello world!',
 
+      // Resolver for fetching a single blog
       blog: async ( _source, _args, { dataSources }, info ) => {
         try {
           
@@ -17,6 +19,7 @@ const resolvers = {
         }
       },
 
+      // Resolver for fetching multiple blogs
       blogs: async ( _source, _args, { dataSources }, info ) => { 
         try {
         
@@ -32,6 +35,7 @@ const resolvers = {
     },
 
     Mutation: {
+      // Mutation for posting a new blog
       postBlog: async (_source, _args, { dataSources }, info) => {
         try {
 
@@ -45,6 +49,7 @@ const resolvers = {
         }
       },
 
+      // Mutation for updating an existing blog
       updateBlog: async (_source, _args, { dataSources }, info) => {
         try {
           
@@ -58,6 +63,7 @@ const resolvers = {
         }
       },
 
+      // Mutation for deleting an existing blog
       deleteBlog: async (_source, _args, { dataSources }, info) => {
         try {
           
