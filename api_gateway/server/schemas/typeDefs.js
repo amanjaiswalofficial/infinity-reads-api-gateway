@@ -5,32 +5,55 @@ const { gql } = require('apollo-server-express');
 const typeDefs = gql`
   type Query {
     hello: String,
-    blogs: [Blogs]
+    blog(_id: ID!): Response
+    blogs: Response
   }
 
-  type Blogs {
-    _id: ID,
+  type Mutation {
+    postBlog(data: BlogInput): Response
+    updateBlog(_id: ID, data: BlogInput): Response
+    deleteBlog(_id: ID): Response
+  }
+
+  input BlogInput {
+    title: String!,
+    content: String
+    user_id: String!
+  }
+
+  type Response {
+    code: Int!,
+    count: Int!,
+    data: [Blog!],
+    datetime: String,
+    message: String,
+    status: String!,
+    timestamp: String,
+  }
+
+  type Blog {
+    _id: ID!,
+    title: String!,
+    likes: [Likes],
     comments: [Comments],
     content: String,
     created_at: String,
-    likes: [Likes],
     tags: [Tags],
-    title: String,
-    user_id: String
+    user_id: String!
   }
 
   type Comments {
-    id: ID,
+    id: ID!,
     comments: String
   }
 
   type Likes {
-    id: ID,
-    likes: String
+    id: ID!,
+    likes: Int
   }
 
   type Tags {
-    id: ID,
+    id: ID!,
     tags: String
   }
 `;

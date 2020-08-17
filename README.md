@@ -41,3 +41,11 @@ Server ready at http://0.0.0.0:4000/
  ```
  npm run test
  ```  
+
+## Logger
+ **We've used ```winston``` logger for logging. Logs are displayed on the console and are managed in the file under logs directory.**
+ * To use the logger:
+ ```
+const logger = require('.path/to/logger/index.js')(module);
+ ```
+ Here, we have used a small wrapper around the winston while importing it to pass the filename while maintaining logs.
