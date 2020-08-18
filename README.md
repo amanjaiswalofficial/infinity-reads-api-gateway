@@ -49,3 +49,13 @@ Server ready at http://0.0.0.0:4000/
 const logger = require('.path/to/logger/index.js')(module);
  ```
  Here, we have used a small wrapper around the winston while importing it to pass the filename while maintaining logs.
+
+ ## Dockerization
+  * To make the ```Dockerfile``` run, you can use ```docker-compose.yaml``` from the terminal:
+  ```
+  docker-compose up -d
+  ```
+  * To shut down the docker-compose container:
+  ```
+  docker-compose down
+  ```
