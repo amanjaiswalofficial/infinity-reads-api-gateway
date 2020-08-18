@@ -7,7 +7,7 @@
     "node": ">=12.13.1"
   },
   "scripts": {
-    "test": "jest",
+    "test": "NODE_ENV= jest --detectOpenHandles",
     "dev": "nodemon server/index.js",
     "start": "node server/index.js"
   },
