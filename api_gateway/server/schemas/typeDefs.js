@@ -6,7 +6,10 @@ const typeDefs = gql`
   type Query {
     hello: String,
     blog(id: ID!): Response
-    blogs: Response
+    blogs(
+      searchBy: String, 
+      listBy: String, 
+      filterBy: String): Response
   }
 
   type Mutation {
@@ -16,13 +19,14 @@ const typeDefs = gql`
   }
 
   input BlogInput {
-    title: String!,
+    title: String,
     content: String
     user_id: String!
   }
 
   type Response {
     code: Int!,
+    count: Int,
     data: [Blog!],
     datetime: String,
     message: String,
@@ -31,8 +35,8 @@ const typeDefs = gql`
   }
 
   type Blog {
-    id: ID!,
-    title: String!,
+    id: ID,
+    title: String,
     likes: [Likes],
     comments: [Comments],
     content: String,

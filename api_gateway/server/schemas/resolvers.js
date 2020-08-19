@@ -1,4 +1,6 @@
 const generateResponse = require('./generateResponse.js');
+const requestParams = require('../utils/requestParams.js');
+
 
 // Provide resolver functions for your schema fields
 const resolvers = {
@@ -9,6 +11,7 @@ const resolvers = {
       // Resolver for fetching a single blog
       blog: async ( _source, _args, { dataSources }, info ) => {
         try {
+          
           const response = await dataSources.BlogsAPI.getSingleBlog(_args.id)
           return generateResponse(response)
         
@@ -21,8 +24,8 @@ const resolvers = {
       // Resolver for fetching multiple blogs
       blogs: async ( _source, _args, { dataSources }, info ) => { 
         try {
-        
-          const response = await dataSources.BlogsAPI.getAllBlogs()
+          const params = requestParams(_args);
+          const response = await dataSources.BlogsAPI.getAllBlogs(params)
           return generateResponse(response)
         
         }
@@ -53,7 +56,7 @@ const resolvers = {
         try {
           
           const payload = JSON.parse(JSON.stringify(_args.data))
-          const response = await dataSources.BlogsAPI.updateBlog(_args._id, payload)
+          const response = await dataSources.BlogsAPI.updateBlog(_args.id, payload)
           return generateResponse(response)
         
         }
@@ -66,7 +69,7 @@ const resolvers = {
       deleteBlog: async (_source, _args, { dataSources }, info) => {
         try {
           
-          const response = await dataSources.BlogsAPI.deleteBlog(_args._id)
+          const response = await dataSources.BlogsAPI.deleteBlog(_args.id)
           return generateResponse(response)
         
         }

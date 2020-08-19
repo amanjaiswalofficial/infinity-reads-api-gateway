@@ -25,8 +25,8 @@ class BlogsAPI extends RESTDataSource {
     }
 
     // method to fetch all blogs
-    async getAllBlogs() {
-        return await this.get('blogs');
+    async getAllBlogs(params=null) {
+        return await this.get('blogs/', params);
     }
 
     // method to post a new blog
