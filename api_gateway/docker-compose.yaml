@@ -1,0 +1,16 @@
+version: '3.0'
+
+services:
+  nodejs:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: nodejs
+    container_name: infinity_reads_api_gateway
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "4000:4000"
+    volumes: 
+      - .:/usr/infinity-reads/api_gateway/
+      - ./node_modules:/usr/infinity-reads/api_gateway/node_modules
