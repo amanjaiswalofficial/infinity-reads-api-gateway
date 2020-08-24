@@ -12,7 +12,7 @@ const resolvers = {
       blog: async ( _source, _args, { dataSources }, info ) => {
         try {
           
-          const response = await dataSources.BlogsAPI.getSingleBlog(_args.id)
+          const response = await dataSources.BlogsAPI.getSingleBlog(_args.id);
           return generateResponse(response)
         
         } 
@@ -24,15 +24,26 @@ const resolvers = {
       // Resolver for fetching multiple blogs
       blogs: async ( _source, _args, { dataSources }, info ) => { 
         try {
+          
           const params = requestParams(_args);
-          const response = await dataSources.BlogsAPI.getAllBlogs(params)
+          const response = await dataSources.BlogsAPI.getAllBlogs(params);
           return generateResponse(response)
         
         }
         catch (err) {
           throw err;
         }
-        
+      },
+
+      // Resolver for fetching the filters
+      tags: async ( _source, _args, { dataSources }, info ) => {
+        try {
+          const response = await dataSources.BlogsAPI.fetchFilters();
+          return generateResponse(response)
+        } 
+        catch (err) {
+          throw err;
+        }
       }
     },
 
@@ -41,8 +52,8 @@ const resolvers = {
       postBlog: async (_source, _args, { dataSources }, info) => {
         try {
 
-          const payload = JSON.parse(JSON.stringify(_args.data))
-          const response = await dataSources.BlogsAPI.postBlog(payload)
+          const payload = JSON.parse(JSON.stringify(_args.data));
+          const response = await dataSources.BlogsAPI.postBlog(payload);
           return generateResponse(response)
         
         }
@@ -55,8 +66,8 @@ const resolvers = {
       updateBlog: async (_source, _args, { dataSources }, info) => {
         try {
           
-          const payload = JSON.parse(JSON.stringify(_args.data))
-          const response = await dataSources.BlogsAPI.updateBlog(_args.id, payload)
+          const payload = JSON.parse(JSON.stringify(_args.data));
+          const response = await dataSources.BlogsAPI.updateBlog(_args.id, payload);
           return generateResponse(response)
         
         }
@@ -69,7 +80,7 @@ const resolvers = {
       deleteBlog: async (_source, _args, { dataSources }, info) => {
         try {
           
-          const response = await dataSources.BlogsAPI.deleteBlog(_args.id)
+          const response = await dataSources.BlogsAPI.deleteBlog(_args.id);
           return generateResponse(response)
         
         }

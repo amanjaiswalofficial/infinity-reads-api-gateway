@@ -3,17 +3,15 @@
 
 
 const requestParams = (params) => {
-    // TODO: When filterBy will be implemented 
-    // this method will return the comma 
-    // separated values to blogs service for now.
 
-    // TODO: Change this for loop to map().
-    for (const propName in params){
-        if (params[propName] === null || params[propName] === undefined){
-            delete params[propName];
-        }
-    }
+    Object.keys(params).forEach(
+        key => (
+            params[key]===null || 
+            params[key]===undefined
+            ) && delete params[key])
+    
     return params
+
 }
 
 module.exports = requestParams;

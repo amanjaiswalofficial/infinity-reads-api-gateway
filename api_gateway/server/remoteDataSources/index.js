@@ -49,6 +49,11 @@ class BlogsAPI extends RESTDataSource {
     async deleteBlog(blog_id) {
         return await this.delete(`blog/${blog_id}`);
     }
+
+    // method to fetch all the filters
+    async fetchFilters() {
+        return await this.get('filters/');
+    }
 }
 
 module.exports = BlogsAPI;
