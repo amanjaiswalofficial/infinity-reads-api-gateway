@@ -5,14 +5,14 @@ const { gql } = require('apollo-server-express');
 const typeDefs = gql`
   type Query {
     hello: String,
-    blog(_id: ID!): Response
+    blog(id: ID!): Response
     blogs: Response
   }
 
   type Mutation {
     postBlog(data: BlogInput): Response
-    updateBlog(_id: ID, data: BlogInput): Response
-    deleteBlog(_id: ID): Response
+    updateBlog(id: ID, data: BlogInput): Response
+    deleteBlog(id: ID): Response
   }
 
   input BlogInput {
@@ -23,7 +23,6 @@ const typeDefs = gql`
 
   type Response {
     code: Int!,
-    count: Int!,
     data: [Blog!],
     datetime: String,
     message: String,
@@ -32,7 +31,7 @@ const typeDefs = gql`
   }
 
   type Blog {
-    _id: ID!,
+    id: ID!,
     title: String!,
     likes: [Likes],
     comments: [Comments],

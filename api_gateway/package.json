@@ -37,6 +37,10 @@
   },
   "jest": {
     "testEnvironment": "node",
+    "testPathIgnorePatterns":[
+      "/node_modules/",
+      "server/logger/index.js"
+    ],
     "coveragePathIgnorePatterns": [
       "/node_modules/"
     ]
