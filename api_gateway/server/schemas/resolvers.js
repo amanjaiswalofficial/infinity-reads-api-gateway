@@ -9,8 +9,7 @@ const resolvers = {
       // Resolver for fetching a single blog
       blog: async ( _source, _args, { dataSources }, info ) => {
         try {
-          
-          const response = await dataSources.BlogsAPI.getSingleBlog(_args._id)
+          const response = await dataSources.BlogsAPI.getSingleBlog(_args.id)
           return generateResponse(response)
         
         } 
