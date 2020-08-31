@@ -25,8 +25,8 @@ class BlogsAPI extends RESTDataSource {
     }
 
     // method to fetch all blogs
-    async getAllBlogs() {
-        return await this.get('blogs');
+    async getAllBlogs(params=null) {
+        return await this.get('blogs/', params);
     }
 
     // method to post a new blog
@@ -48,6 +48,11 @@ class BlogsAPI extends RESTDataSource {
     // method to delete a blog
     async deleteBlog(blog_id) {
         return await this.delete(`blog/${blog_id}`);
+    }
+
+    // method to fetch all the filters
+    async fetchFilters() {
+        return await this.get('filters/');
     }
 }
 
