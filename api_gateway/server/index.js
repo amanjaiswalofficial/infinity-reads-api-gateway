@@ -11,4 +11,5 @@ app.listen({ port: config.get('app.port') }, () =>
     logger.info(`🚀 Server ready at http://localhost:${config.get('app.port')}`)
 );
 
+
 module.exports = app;

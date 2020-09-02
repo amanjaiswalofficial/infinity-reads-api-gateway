@@ -1,4 +1,4 @@
-const generateResponse = require('./generateResponse.js');
+const generateResponse = require('../utils/generateResponse.js');
 const requestParams = require('../utils/requestParams.js');
 
 

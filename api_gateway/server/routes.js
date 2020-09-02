@@ -1,19 +1,41 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 
 const server = require('./apolloServer.js');
+const userRoutes = require('./userManagement/routes.js');
+const db = require('./userManagement/models/index.js');
 
 /**
  * Express configuration
- */
+*/
 
-// Initializing express 
+// Initializing express and db
 const app = express();
+db.sequelize.sync({ force: true }).then(() => {
+  console.log("Drop and re-sync db.");
+});
 
-// Various routes 
+
+var corsOptions = {
+  // origin: "http://localhost:8081"
+  origin: "*"
+};
+
+
+app.use(cors(corsOptions));
+
+// parse requests of content-type -> application/json
 app.use(bodyParser.json());
+
+// parse requests of content-type -> application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended:true }));
+
+
+// Various Routes
 app.get('/health', (req, res) => res.json({status: 'ok'}))
+app.use('/user', userRoutes);
 
 server.applyMiddleware({
     app,
