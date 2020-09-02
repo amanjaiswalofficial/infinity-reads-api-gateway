@@ -106,3 +106,6 @@ dist
 
 # VSCode
 .vscode/
+
+# DB Files for Mysql
+db_user/
