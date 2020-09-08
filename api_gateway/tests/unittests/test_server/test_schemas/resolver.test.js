@@ -29,10 +29,11 @@ describe('Testing Blogs Resolvers Success', () => {
             null  
         );
 
+        
         expect(result.code).toBe(200);
         expect(result.status).toEqual('SUCCESS');
-        expect(result.data[0].id).toEqual('5f3ccf1d5248ee12f6979bee');
-        expect(result.data[0].title).toEqual('title 1');
+        expect(result.data.blogs[0].id).toEqual('5f3ccf1d5248ee12f6979bee');
+        expect(result.data.blogs[0].title).toEqual('title 1');
        
         done();
     });

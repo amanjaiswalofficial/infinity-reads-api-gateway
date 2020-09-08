@@ -1,9 +1,9 @@
-const generateResponse = require('../utils/generateResponse.js');
-const requestParams = require('../utils/requestParams.js');
+const generateResponse = require('../../utils/generateResponse.js');
+const requestParams = require('../../utils/requestParams.js');
 
 
 // Provide resolver functions for your schema fields
-const resolvers = {
+const blogResolvers = {
     Query: {
       // Sample query resolver
       hello: () => 'Hello world!',
@@ -91,4 +91,4 @@ const resolvers = {
     }
 };
 
-module.exports = resolvers;
+module.exports = blogResolvers;

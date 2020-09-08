@@ -6,24 +6,22 @@ const GET_ALL_BLOGS_QUERY = gql`
 query {
     blogs{
         data{
-            id
-            title
-            content
-            comments{
+            blogs{
                 id
+                title
+                content
+                comments{
+                    id
+                }
+                created_at
+                likes {
+                    id
+                }
+                user_id
+                }
             }
-            created_at
-            likes {
-                id
-            }
-            tags{
-                id
-            }
-            user_id
-        }
         status
         code
-        
     }
 }
 `;

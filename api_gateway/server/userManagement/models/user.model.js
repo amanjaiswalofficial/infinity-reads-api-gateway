@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 
 module.exports = (sequelize, Sequelize) => {
     const User = sequelize.define("user", {
-      name: {
+      firstName: {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {
@@ -17,6 +17,11 @@ module.exports = (sequelize, Sequelize) => {
             msg: "Name length must be between 2-20 characters"
           }
         }
+      },
+
+      lastName: {
+        type: Sequelize.STRING,
+        allowNull: true,
       },
 
       email: {
@@ -59,10 +64,6 @@ module.exports = (sequelize, Sequelize) => {
           notEmpty: {
             msg: 'Password cannot be empty'
           },
-          // len: {
-          //   args: [8, 20],
-          //   msg: "Password length must be between 8-20 characters"
-          // }
         }
       },
 
@@ -71,6 +72,7 @@ module.exports = (sequelize, Sequelize) => {
       }
 
     });
+
     
     // CLASS METHODS
 
@@ -80,20 +82,35 @@ module.exports = (sequelize, Sequelize) => {
     // which will return hashed password.
 
     User.hashPassword = function(password) {
-      return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null);
+      return bcrypt.hash(password, bcrypt.genSaltSync(10), null);
     }
-    
+
+    // This class method compares the hashed passwords 
+    User.validPassword = function(payload_password, db_password) {
+     return bcrypt.compare(payload_password, db_password)
+    };
+
+
     // INSTANCE METHODS
 
     // They can be used after creating an instance of User class. 
+    // This instance method overrides the toJSON(),
+    // clones the values and removes the password
+    // from the cloned values.
     // For eg:
     // const user = await User.create(payload)
-    // console.log(await user.validPassword(payload.password))
-    // which will return true if passwords match.
+    // console.log(await user.toJSON())
+    // which will return data with no password included.
 
-    User.prototype.validPassword = function(password) {
-      return bcrypt.compare(password, this.password)
-    }
+    User.prototype.toJSON = function() {
+      const values = Object.assign({}, this.get());
+      
+      delete values.password;
+      return values;
+    };
 
     return User;
 };
+
+
+// {data: {message}}, {data: {token: null, message: "Account verified"}}

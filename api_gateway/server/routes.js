@@ -4,7 +4,6 @@ const cors = require('cors');
 
 
 const server = require('./apolloServer.js');
-const userRoutes = require('./userManagement/routes.js');
 const db = require('./userManagement/models/index.js');
 
 /**
@@ -13,9 +12,16 @@ const db = require('./userManagement/models/index.js');
 
 // Initializing express and db
 const app = express();
-db.sequelize.sync({ force: true }).then(() => {
-  console.log("Drop and re-sync db.");
-});
+
+// async () => {
+//   console.log("dasfadsf")
+//   await db.sequelize.sync({ force: true })
+//   console.log("Drop and re-sync db.")
+// }
+
+db.sequelize.sync({force:true}).then(
+  console.log("Drop and re-sync db")
+)
 
 
 var corsOptions = {
@@ -35,7 +41,6 @@ app.use(bodyParser.urlencoded({ extended:true }));
 
 // Various Routes
 app.get('/health', (req, res) => res.json({status: 'ok'}))
-app.use('/user', userRoutes);
 
 server.applyMiddleware({
     app,

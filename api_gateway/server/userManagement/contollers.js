@@ -1,116 +1,171 @@
-const db = require('./models/index');
-const User = db.user;
-const Op = db.Sequelize.Op;
+// const db = require('./models/index');
+// const User = db.user;
+// const Op = db.Sequelize.Op;
+
+const config = require('config');
+
+const generateUserResponse = require('../utils/generateUserResponse');
+const generateAccessToken = require('../utils/createJwtToken');
 
 
 const controllers = {
 
     // Creates a new user
-    createUser: async(req, res) => {
+    createUser: async(db, args) => {
         try {
 
             const payload = {
-                name: req.body.name,
-                email: req.body.email,
-                password: await User.hashPassword(req.body.password),
-                image: req.body.image
+                firstName: args.firstName,
+                lastName: args.lastName,
+                email: args.emailId,
+                password: await db.hashPassword(args.password),
+                image: args.image || null
             }
-
-            const user = await User.create(payload);
             
-            res.send(user);
+            await db.create(payload);
+            
+            return generateUserResponse(
+                null, 
+                200,
+                "User created successfully");
 
         } catch (err) {
-            res.status(400).send({
-                message: err.message || "Some error occurred while creating the user."
-            });
-        }
-    },
-
-    // Finds all available users
-    findAll: async(req, res) => {
-        try {
-
-            const users = await User.findAll();
-            res.send(users);
-
-        } catch (err) {
-            res.status(500).send({
-                message: err.message || "Some error occurred while retrieving all Users."
-            });
+            return generateUserResponse(
+                null, 
+                400, 
+                err.message || "Error while creating a new user!"
+            );
         }
     },
 
     // Find a single user with given ID
-    findOneUser: async(req, res) => {
-        const id = req.params.id;
-        
+    findOneUser: async(db, id) => {        
         try {
             
-            const user = await User.findByPk(id)
+            const user = await db.findByPk(id)
             
-            if (user === null || 
-                user === undefined) {
-                throw user
+            if (!user) {
+                throw `User with id ${id} not found!`
             }
             
-            res.send(user)
+            const payload = await user.toJSON(); 
+            
+            return generateUserResponse(payload, 200);
             
         } catch (err) {
-            res.status(500).send({
-                message: `User with id: ${ id } doesn't exists.`
-            });
+            return generateUserResponse(null, 400, err);
         }
     },
 
-    // Updates an existing user with given ID
-    updateUser: async(req, res) => {
-        const id = req.params.id;
-
+    // Authenticate user
+    authenticateUser: async(db, args) => {
         try {
-
+            
             const payload = {
-                name: req.body.name,
-                email: req.body.email,
-                password: await User.hashPassword(req.body.password),
-                image: req.body.image
+                email: args.emailId,
+                password: args.password
             }
+
+            // Finding if user exists or not
+            const user = await db.findOne({
+                where: {
+                    email: payload.email,
+                }
+            })
+
+            if (!user) {
+                throw user
+            } 
             
-            const user = await User.update(payload, { where: { id: id }});
-            if (user == 1){
-                res.send({message: "User updated successfully!"})
-            } else {
-                throw user
+            // Validating the password
+            const isValid = await db.validPassword(payload.password, user.password);
+            
+            if (!isValid) {
+                throw "Invalid Password"
             }
 
+            // Creating a JWT access token
+            const jwtToken = generateAccessToken(user.id);
+
+            return generateUserResponse(
+                {token: jwtToken}, 
+                200
+            )
+
+
         } catch (err) {
-            res.status(500).send({
-                message: err.message || 
-                `Cannot update User with id: ${ id }. Make sure User exists or details provided are correct.`
-            });
+            return generateUserResponse(
+                null, 
+                400,
+                err || "User not found!" )
         }
-    },
+    }
 
-    // Deletes an existing user with given ID
-    deleteUser: async(req, res) => {
-        const id = req.params.id;
+    // // Finds all available users
+    // findAll: async(req, res) => {
+    //     try {
 
-        try {
+    //         const users = await User.findAll();
+    //         res.send(users);
 
-            const user = await User.destroy({ where: { id: id }});
-            if (user == 1){
-                res.send({message: "User deleted successfully!"})
-            } else {
-                throw user
-            }
+    //     } catch (err) {
+    //         res.status(500).send({
+    //             message: err.message || "Some error occurred while retrieving all Users."
+    //         });
+    //     }
+    // },
+
+    
+
+    // // Updates an existing user with given ID
+    // updateUser: async(req, res) => {
+    //     const id = req.params.id;
+
+    //     try {
+
+    //         const payload = {
+    //             firstName: req.body.firstName,
+    //             lastName: req.body.lastName,
+    //             email: req.body.email,
+    //             password: await User.hashPassword(req.body.password),
+    //             image: req.body.image
+    //         }
+            
+    //         const user = await User.update(payload, { where: { id: id }});
+    //         if (user == 1){
+    //             res.send({message: "User updated successfully!"})
+    //         } else {
+    //             throw user
+    //         }
+
+    //     } catch (err) {
+    //         res.status(500).send({
+    //             message: err.message || 
+    //             `Cannot update User with id: ${ id }. Make sure User exists or details provided are correct.`
+    //         });
+    //     }
+    // },
+
+    // // Deletes an existing user with given ID
+    // deleteUser: async(req, res) => {
+    //     const id = req.params.id;
+
+    //     try {
+
+    //         const user = await User.destroy({ where: { id: id }});
+    //         if (user == 1){
+    //             res.send({message: "User deleted successfully!"})
+    //         } else {
+    //             throw user
+    //         }
       
-        } catch (err) {
-            res.status(500).send({
-                message: err.message || 
-                `Cannot delete User with id: ${ id }. Make sure the User exists.`
-            });
-        }        
-    },
+    //     } catch (err) {
+    //         res.status(500).send({
+    //             message: err.message || 
+    //             `Cannot delete User with id: ${ id }. Make sure the User exists.`
+    //         });
+    //     }        
+    // },
 }
 
 module.exports = controllers;

@@ -2,8 +2,8 @@ const { gql } = require('apollo-server-express');
 
 
 // Construct a schema, using GraphQL schema language
-const typeDefs = gql`
-  type Query {
+const typeDefsBlogs = gql`
+  extend type Query {
     hello: String,
     blog(id: ID!): Response,
     blogs(
@@ -15,7 +15,7 @@ const typeDefs = gql`
     tags: Response
   }
 
-  type Mutation {
+  extend type Mutation {
     postBlog(data: BlogInput): Response,
     updateBlog(id: ID, data: BlogInput): Response,
     deleteBlog(id: ID): Response
@@ -28,17 +28,11 @@ const typeDefs = gql`
     tags: [String]
   }
 
-  type Response {
-    code: Int!,
-    count: Int,
+  extend type Response {
     data: Payload!,
-    datetime: String,
-    message: String,
-    status: String!,
-    timestamp: String,
   }
 
-  type Payload {
+  extend type Payload {
     blogs: [Blog],
     tags: [String],
     total_count: Int,
@@ -66,4 +60,4 @@ const typeDefs = gql`
   }
 `;
 
-module.exports = typeDefs;
+module.exports = typeDefsBlogs;
