@@ -1,4 +1,4 @@
-const resolvers = require('../../../../server/schemas/resolvers.js');
+const resolvers = require('../../../../server/schemas/resolvers/blogResolvers.js');
 const { constructTestServer, blogsAPI } = require('../../../serverSetup.js');
 const { GET_SINGLE_BLOG_RESPONSE_SUCCESS,
         GET_SINGLE_BLOG_RESPONSE_FAILURE } = require('../../../testData/blogsData.js');

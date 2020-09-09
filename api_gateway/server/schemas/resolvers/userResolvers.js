@@ -1,6 +1,4 @@
-// const db = require('../../userManagement/models/index.js');
-// const User = db.user;
-
+// Resolvers for user management are written here
 const controllers = require('../../userManagement/contollers.js');
 
 const generateResponse = require('../../utils/generateResponse.js');
@@ -9,6 +7,7 @@ const generateResponse = require('../../utils/generateResponse.js');
 const userResolvers = {
     
   Query: {
+    // Fetches a single user from DB
     user: async ( _source, _args, { db }, info ) => {
       
       try {
@@ -23,6 +22,7 @@ const userResolvers = {
   },
   
   Mutation: {
+    // Creates a new user in DB
     newUser: async ( _source, _args, { db }, info ) => {
 
       try {
@@ -35,6 +35,7 @@ const userResolvers = {
       }
     },
 
+    // Validates the existing user for login
     existingUser: async ( _source, _args, { db }, info ) => {
 
       try {

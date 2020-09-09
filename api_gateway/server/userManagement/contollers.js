@@ -1,9 +1,4 @@
-// const db = require('./models/index');
-// const User = db.user;
-// const Op = db.Sequelize.Op;
-
-const config = require('config');
-
+// Controllers for various operations on user management
 const generateUserResponse = require('../utils/generateUserResponse');
 const generateAccessToken = require('../utils/createJwtToken');
 
@@ -89,7 +84,8 @@ const controllers = {
 
             return generateUserResponse(
                 {token: jwtToken}, 
-                200
+                200,
+                "Login Successfull!"
             )
 
 
@@ -100,22 +96,6 @@ const controllers = {
                 err || "User not found!" )
         }
     }
-
-    // // Finds all available users
-    // findAll: async(req, res) => {
-    //     try {
-
-    //         const users = await User.findAll();
-    //         res.send(users);
-
-    //     } catch (err) {
-    //         res.status(500).send({
-    //             message: err.message || "Some error occurred while retrieving all Users."
-    //         });
-    //     }
-    // },
-
-    
 
     // // Updates an existing user with given ID
     // updateUser: async(req, res) => {

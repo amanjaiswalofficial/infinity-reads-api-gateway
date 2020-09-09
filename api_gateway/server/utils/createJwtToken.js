@@ -1,3 +1,6 @@
+// JWT is created here whenever 
+// required which expires in 7 days
+
 const config = require('config');
 
 const jwt = require('jsonwebtoken');
