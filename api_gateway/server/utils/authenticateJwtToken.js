@@ -1,25 +1,38 @@
 // Authentication of JWT is done here
-
-// TODO: Check functionality 
-// when token comes from frontend
 const config = require('config');
 
 const jwt = require('jsonwebtoken');
 
-const authenticateToken = (token, next) => {
 
-    if (token == null) return "Please provide a valid token!"
+const authenticateToken = async (token) => {
 
-    jwt.verify(
+    // Throws error msg if token is null
+    try {
+        if (token == null) {
+            throw "Do not provide empty token!"
+        }      
+    } catch (err) {
+        throw await err
+    }
+    
+
+    // Returns token data if token is valid 
+    // otherwise throws an error
+    return jwt.verify(
         token, 
         config.get('app.token'), 
-        (err, user) => {
-            console.log(err)
-            if (err) return err.message
-            console.log(user)
-            next();
+        async (err, data) => {
+
+            try {
+                if (err) throw err;
+                
+            } catch (err) {
+                throw err.message
+            }
+            
+            return await data;
         }
-    )
+    );
 };
 
 

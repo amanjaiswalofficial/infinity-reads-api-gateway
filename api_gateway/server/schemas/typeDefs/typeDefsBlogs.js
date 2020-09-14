@@ -18,14 +18,15 @@ const typeDefsBlogs = gql`
   extend type Mutation {
     postBlog(data: BlogInput): Response,
     updateBlog(id: ID, data: BlogInput): Response,
-    deleteBlog(id: ID): Response
+    deleteBlog(id: ID, data: BlogInput): Response
   }
 
   input BlogInput {
     title: String,
     content: String,
-    user_id: String!,,
-    tags: [String]
+    user_id: String,
+    tags: [String],
+    token: String!
   }
 
   extend type Response {

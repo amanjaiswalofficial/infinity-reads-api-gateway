@@ -45,7 +45,12 @@ const controllers = {
             
             const payload = await user.toJSON(); 
             
-            return generateUserResponse(payload, 200);
+            return generateUserResponse(
+                {
+                    user: payload
+                }, 
+                200
+            );
             
         } catch (err) {
             return generateUserResponse(null, 400, err);
@@ -83,7 +88,10 @@ const controllers = {
             const jwtToken = generateAccessToken(user.id);
 
             return generateUserResponse(
-                {token: jwtToken}, 
+                {   
+                    user: await user.toJSON(),
+                    token: jwtToken
+                }, 
                 200,
                 "Login Successfull!"
             )
@@ -95,57 +103,8 @@ const controllers = {
                 400,
                 err || "User not found!" )
         }
-    }
-
-    // // Updates an existing user with given ID
-    // updateUser: async(req, res) => {
-    //     const id = req.params.id;
-
-    //     try {
-
-    //         const payload = {
-    //             firstName: req.body.firstName,
-    //             lastName: req.body.lastName,
-    //             email: req.body.email,
-    //             password: await User.hashPassword(req.body.password),
-    //             image: req.body.image
-    //         }
-            
-    //         const user = await User.update(payload, { where: { id: id }});
-    //         if (user == 1){
-    //             res.send({message: "User updated successfully!"})
-    //         } else {
-    //             throw user
-    //         }
-
-    //     } catch (err) {
-    //         res.status(500).send({
-    //             message: err.message || 
-    //             `Cannot update User with id: ${ id }. Make sure User exists or details provided are correct.`
-    //         });
-    //     }
-    // },
-
-    // // Deletes an existing user with given ID
-    // deleteUser: async(req, res) => {
-    //     const id = req.params.id;
-
-    //     try {
-
-    //         const user = await User.destroy({ where: { id: id }});
-    //         if (user == 1){
-    //             res.send({message: "User deleted successfully!"})
-    //         } else {
-    //             throw user
-    //         }
-      
-    //     } catch (err) {
-    //         res.status(500).send({
-    //             message: err.message || 
-    //             `Cannot delete User with id: ${ id }. Make sure the User exists.`
-    //         });
-    //     }        
-    // },
+    },
 }
+
 
 module.exports = controllers;
