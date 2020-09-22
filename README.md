@@ -34,6 +34,14 @@ npm run dev
 Server ready at http://0.0.0.0:4000/
 ```
 
+## User Management
+ **We've used Mysql as database and sequelize as ORM for user management.**
+
+ * To run mysql in terminal, first run ```docker-compose.yaml``` and then:
+ ```
+ mysql -h 127.0.0.1 -P 3306 -u admin -p user
+ ```
+
 ## Testing
  **We've used ```Jest``` and ```supertest``` for testing.**
  

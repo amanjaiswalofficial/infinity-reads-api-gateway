@@ -1,9 +1,10 @@
-const generateResponse = require('./generateResponse.js');
-const requestParams = require('../utils/requestParams.js');
+const generateResponse = require('../../utils/generateResponse.js');
+const requestParams = require('../../utils/requestParams.js');
+const authenticateToken = require('../../utils/authenticateJwtToken.js');
 
 
 // Provide resolver functions for your schema fields
-const resolvers = {
+const blogResolvers = {
     Query: {
       // Sample query resolver
       hello: () => 'Hello world!',
@@ -52,6 +53,11 @@ const resolvers = {
       postBlog: async (_source, _args, { dataSources }, info) => {
         try {
 
+          // Authenticates token and delete it as 
+          // we don't need it to be passed in payload.
+          await authenticateToken(_args.data.token);
+          delete _args.data.token;
+
           const payload = JSON.parse(JSON.stringify(_args.data));
           const response = await dataSources.BlogsAPI.postBlog(payload);
           return generateResponse(response)
@@ -65,6 +71,11 @@ const resolvers = {
       // Mutation for updating an existing blog
       updateBlog: async (_source, _args, { dataSources }, info) => {
         try {
+          
+          // Authenticates token and delete it as 
+          // we don't need it to be passed in payload.
+          await authenticateToken(_args.data.token)
+          delete _args.data.token
           
           const payload = JSON.parse(JSON.stringify(_args.data));
           const response = await dataSources.BlogsAPI.updateBlog(_args.id, payload);
@@ -80,6 +91,11 @@ const resolvers = {
       deleteBlog: async (_source, _args, { dataSources }, info) => {
         try {
           
+          // Authenticates token and delete it as 
+          // we don't need it to be passed in payload.
+          await authenticateToken(_args.data.token)
+          delete _args.data.token
+          
           const response = await dataSources.BlogsAPI.deleteBlog(_args.id);
           return generateResponse(response)
         
@@ -91,4 +107,5 @@ const resolvers = {
     }
 };
 
-module.exports = resolvers;
+
+module.exports = blogResolvers;

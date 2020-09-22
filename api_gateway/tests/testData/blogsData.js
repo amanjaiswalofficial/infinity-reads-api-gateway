@@ -2,26 +2,28 @@
 
 const GET_ALL_BLOGS_RESPONSE_SUCCESS = {
     "code": 200,
-    "data": [
-        {
-            "content": "content",
-            "created_at": "2020-08-19T12:35:01.870000",
-            "id": "5f3ccf1d5248ee12f6979bee",
-            "tags": [],
-            "title": "title 1",
-            "updated_at": "2020-08-19T12:35:01.870000",
-            "user_id": "234567890"
-        },
-        {
-            "content": "content2",
-            "created_at": "2020-08-19T12:35:01.870000",
-            "id": "5f3ccf1d5248ee12f6979bef",
-            "tags": [],
-            "title": "title 2",
-            "updated_at": "2020-08-19T12:35:01.870000",
-            "user_id": "234567890"
+    "data": {
+        blogs: [
+            {
+                "content": "content",
+                "created_at": "2020-08-19T12:35:01.870000",
+                "id": "5f3ccf1d5248ee12f6979bee",
+                "tags": [],
+                "title": "title 1",
+                "updated_at": "2020-08-19T12:35:01.870000",
+                "user_id": "234567890"
+            },
+            {
+                "content": "content2",
+                "created_at": "2020-08-19T12:35:01.870000",
+                "id": "5f3ccf1d5248ee12f6979bef",
+                "tags": [],
+                "title": "title 2",
+                "updated_at": "2020-08-19T12:35:01.870000",
+                "user_id": "234567890"
             }
-    ],
+        ]
+    },
     "datetime": "2020-08-19T16:15:04",
     "errors": null,
     "message": null,
@@ -33,17 +35,19 @@ const GET_ALL_BLOGS_RESPONSE_SUCCESS = {
 
 const GET_SINGLE_BLOG_RESPONSE_SUCCESS = {
     "code": 200,
-    "data": [
-        {
-            "content": "content",
-            "created_at": "2020-08-19T12:35:01.870000",
-            "id": "5f3ccf1d5248ee12f6979bee",
-            "tags": [],
-            "title": "title 1",
-            "updated_at": "2020-08-19T12:35:01.870000",
-            "user_id": "234567890"
-        },
-    ],
+    "data": {
+        blogs:[
+            {
+                "content": "content",
+                "created_at": "2020-08-19T12:35:01.870000",
+                "id": "5f3ccf1d5248ee12f6979bee",
+                "tags": [],
+                "title": "title 1",
+                "updated_at": "2020-08-19T12:35:01.870000",
+                "user_id": "234567890"
+            },
+        ]
+    },
     "datetime": "2020-08-19T16:15:04",
     "errors": null,
     "message": null,

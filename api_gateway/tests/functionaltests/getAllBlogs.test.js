@@ -20,8 +20,8 @@ describe('Testing Queries', () => {
         const { query } = createTestClient(server);
         const result = await query({query: GET_ALL_BLOGS_QUERY})
 
-        expect(result.data.blogs.data[0].id).toEqual('5f3ccf1d5248ee12f6979bee');
-        expect(result.data.blogs.data[1].title).toEqual('title 2');
+        expect(result.data.blogs.data.blogs[0].id).toEqual('5f3ccf1d5248ee12f6979bee');
+        expect(result.data.blogs.data.blogs[1].title).toEqual('title 2');
         
         done();
     })
